@@ -2,22 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-class Square extends React.Component {
-  constructor(props) {
-    super(props); // always call super when defining the constructor of a subclass
-    this.state = {
-      value: null,
-    };
-  }
-
-  render() {
-    // return <button className="square" onClick={function() {alert('click');}}>{this.props.value}</button>;
-    return (
-      <button className="square" onClick={() => this.props.onClick()}>
-        {this.props.value}
-      </button>
-    );
-  }
+//function components are a simpler way to write components that only contain a render method and don’t have their own state
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
 
 class Board extends React.Component {
@@ -30,8 +21,8 @@ class Board extends React.Component {
   handleClick(i) {
     //call .slice() to create a copy of the squares array to modify
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
-    this.setState({squares: squares});
+    squares[i] = "X";
+    this.setState({ squares: squares });
   }
 
   renderSquare(i) {
