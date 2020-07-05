@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-//function components are a simpler way to write components that only contain a render method and don’t have their own state
+//function components contain a render method and don’t have their own state
 function Square(props) {
   return (
+    //one square one button, one function onClick.
     <button className="square" onClick={props.onClick}>
       {props.value}
     </button>
@@ -14,6 +15,7 @@ function Square(props) {
 class Board extends React.Component {
   renderSquare(i) {
     return (
+      // call Square function
       <Square
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
@@ -21,6 +23,7 @@ class Board extends React.Component {
     );
   }
 
+  // render the whole board, three rows with 3 columns each
   render() {
     return (
       <div>
@@ -59,7 +62,7 @@ class Game extends React.Component {
   }
 
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber +1);
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares) || squares[i]) {
@@ -72,7 +75,8 @@ class Game extends React.Component {
           squares: squares,
         },
       ]),
-      stepNumber:history.length,
+      stepNumber: history.length,
+      // xIsNext (a boolean) will be flipped to determine which player goes next
       xIsNext: !this.state.xIsNext,
     });
   }
@@ -95,7 +99,8 @@ class Game extends React.Component {
         </li>
       );
     });
-
+    
+    // display the status
     let status;
     if (winner) {
       status = "Winner: " + winner;
@@ -108,7 +113,7 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={i => this.handleClick(i)}
+            onClick={(i) => this.handleClick(i)}
           />
         </div>
         <div className="game-info">
@@ -124,6 +129,7 @@ class Game extends React.Component {
 
 ReactDOM.render(<Game />, document.getElementById("root"));
 function calculateWinner(squares) {
+  //8 lines in total for the squares
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
